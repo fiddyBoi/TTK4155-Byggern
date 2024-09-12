@@ -2,6 +2,7 @@
 
 // Includes
 // ****************************************************
+#include <stdio.h>
 #include <avr/io.h>
 // ****************************************************
 
@@ -23,10 +24,11 @@
 
 // Implementation of the public functions
 // ****************************************************
-void UART_Init(){
+
+void UART_Init(unsigned int ubrr){
 	/* Set baud rate */
-	UBRR0H = (unsigned char)(MYUBRR>>8);
-	UBRR0L = (unsigned char)MYUBRR;
+	UBRR0H = (unsigned char)((ubrr)>>8);
+	UBRR0L = (unsigned char)ubrr;
 	/* Enable receiver and transmitter */
 	UCSR0B = (1<<RXEN0)|(1<<TXEN0);
 	/* Set frame format: 8data, 2stop bit */
