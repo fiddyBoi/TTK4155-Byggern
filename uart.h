@@ -7,9 +7,6 @@
 
 // Constants 
 // ****************************************************
-#define F_CPU 4915200
-#define BAUD 9600
-#define MYUBRR F_CPU/16/BAUD-1
 // ****************************************************
 
 // Types 
@@ -23,10 +20,15 @@
 // Function prototypes 
 // ****************************************************
 
-// Initializes the UART driver
+// Initializes the UART driver and links printf to the driver
 void UART_Init(unsigned int ubrr);
+
+// Blocking transmit of one char over UART
 void UART_Transmit(unsigned char data);
+
+// BLocking receive of one char over UART
 unsigned char UART_Receive();
+
 // ****************************************************
 
 #endif

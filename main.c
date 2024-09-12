@@ -6,48 +6,64 @@
  */ 
 
 #define F_CPU 4915200
+#define BAUD 9600
+#define MYUBRR F_CPU/16/BAUD-1
 
+#include <stdio.h>
 #include <avr/io.h>
 #include <util/delay.h>
 #include "uart.h"
 
-// Test functions
+// Test functions - prototypes
 // **************************************************
-// ATmega162
-// Outputs a square wave of period 2s on PA0
-void IO_test(){
-	int i = 0;
-	DDRA = 0x1; // set PA0 to output
-	while(1){
-		if(i == 0){
-			PORTA = 0x0; // set PA0 low
-			i = 1;
-			}else{
-			PORTA = 0x1; // set PA0 high
-			i = 0;
-		}
-		_delay_ms(1000);
-	}
-}
 
-// ATmega162
-// Listens to a byte sent over UART and echo's it back
-void UART_test(){
-	UART_Init(MYUBRR);
-	while (1)
-	{
-		unsigned char echo = UART_Receive();
-		_delay_ms(500);
-		UART_Transmit(echo);
-	}
-}
+// Outputs a square wave of period 2s on PA0 (ATmega162)
+void IO_test();
+
+// Listens to a byte sent over UART and echo's it back (ATmega162)
+void UART_test();
+
+// Test the linking of printf (ATmega162)
+void PRINTF_test();
 
 // **************************************************
 
 int main(void)
 {
-	UART_test();
+	 UART_test();
 }
 
-
+ // Test functions - implementation
+ // **************************************************
  
+ void IO_test(){
+	 int i = 0;
+	 DDRA = 0x1; // set PA0 to output
+	 while(1){
+		 if(i == 0){
+			 PORTA = 0x0; // set PA0 low
+			 i = 1;
+			 }else{
+			 PORTA = 0x1; // set PA0 high
+			 i = 0;
+		 }
+		 _delay_ms(1000);
+	 }
+ }
+
+ void UART_test(){
+	 UART_Init(MYUBRR);
+	 while (1)
+	 {
+		 unsigned char echo = UART_Receive();
+		 _delay_ms(500);
+		 UART_Transmit(echo);
+	 }
+ }
+
+ void PRINTF_test(){
+	 UART_Init(MYUBRR);
+	 printf("Testing linking of printf.");
+ }
+
+ // **************************************************
