@@ -45,7 +45,7 @@ int main(void)
 	ADC_Init();
 	
 	// test shit
-	ADC_test(JOYSTICK_X_CHANNEL);
+	ADC_test(SLIDER_RIGHT_CHANNEL);
 }
 
  // Test functions - implementation
