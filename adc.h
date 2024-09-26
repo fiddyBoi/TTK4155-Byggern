@@ -25,7 +25,10 @@
 // Function prototypes
 // ****************************************************
 
+// Starts the PWM signal for the ADC's external clock
 void ADC_Init();
+
+// Returns the value for the given channel
 uint8_t ADC_Read(uint8_t channel);
 
 // ****************************************************

@@ -16,6 +16,7 @@
 #include "uart.h"
 #include "xmem.h"
 #include "adc.h"
+#include "multifunctionBoard.h"
 
 // Test functions - prototypes
 // **************************************************
@@ -35,6 +36,9 @@ void SRAM_test();
 // Testing ADC driver by reading and printing out values on a given channel
 void ADC_test(uint8_t channelToTest);
 
+// Testing the joystick
+void JOY_test();
+
 // **************************************************
 
 int main(void)
@@ -45,7 +49,7 @@ int main(void)
 	ADC_Init();
 	
 	// test shit
-	ADC_test(SLIDER_RIGHT_CHANNEL);
+	JOY_test();
 }
 
  // Test functions - implementation
@@ -121,6 +125,17 @@ void ADC_test(uint8_t channelToTest){
 		uint8_t valueRead = ADC_Read(channelToTest);
 		printf("Value from ADC channel %d: %d \n", channelToTest, valueRead);
 		_delay_ms(100);
+	}
+}
+
+void JOY_test(){
+	JOY_Calibrate();
+	while(1){
+		JoystickPosition pos = JOY_GetPosition();
+		JoystickDirection dir = JOY_GetDirection();
+		printf("Joystick position x:%d y:%d \n", pos.x, pos.y);
+		printf("Joystick direction: %s \n", DIR_STRING[dir]);
+		_delay_ms(500);
 	}
 }
  // **************************************************
