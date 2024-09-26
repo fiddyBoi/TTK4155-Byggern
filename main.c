@@ -5,7 +5,7 @@
  * Author : fredrbb
  */ 
 
-#define F_CPU 4915200
+#include "ATmega162.h" 
 #define BAUD 9600
 #define MYUBRR F_CPU/16/BAUD-1
 
@@ -32,6 +32,9 @@ void PRINTF_test();
 // Testing the SRAM by writing and retrieving to the SRAM
 void SRAM_test();
 
+// Testing ADC driver by reading and printing out values on a given channel
+void ADC_test(uint8_t channelToTest);
+
 // **************************************************
 
 int main(void)
@@ -42,6 +45,7 @@ int main(void)
 	ADC_Init();
 	
 	// test shit
+	ADC_test(JOYSTICK_X_CHANNEL);
 }
 
  // Test functions - implementation
@@ -110,5 +114,13 @@ void SRAM_test(void)
 		}
 	}
 	printf("SRAM test completed with \n%4d errors in write phase and \n%4d errors in retrieval phase\n\n", write_errors, retrieval_errors);
+}
+
+void ADC_test(uint8_t channelToTest){
+	while(1){
+		uint8_t valueRead = ADC_Read(channelToTest);
+		printf("Value from ADC channel %d: %d \n", channelToTest, valueRead);
+		_delay_ms(100);
+	}
 }
  // **************************************************

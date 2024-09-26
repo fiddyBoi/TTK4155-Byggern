@@ -4,6 +4,8 @@
 // ****************************************************
 #include <avr/io.h>
 #include <stdio.h>
+#include <util/delay.h>
+#include "ATmega162.h"
 // ****************************************************
 
 // Private macros and constants
@@ -39,10 +41,24 @@ void ADC_Init(){
 
 uint8_t ADC_Read(uint8_t channel){
 	volatile char * adc_mem = ( char *) ADC_BASE_ADDRESS ;
-	//volatile adc_mem[channel] = 1; // not sure about this...
-	// busy wait (for BUSY signal)
-	// OR calculate convertion time (see datasheet) and wait that amout
-	uint8_t value = adc_mem[channel];
+	int numberOfChannels = 4;
+	uint8_t value;
+	
+	// write to create new sample
+	*adc_mem = 0;
+
+	// calculate convertion time (see datasheet) and wait that amount
+		// int N = 4; // number of channels converted
+		// int f_clk = 2450000; // 2.45 Mhz
+		// int t_conv = (9 * N * 2)/f_clk;  
+	_delay_ms(0.01618);
+	
+	for(int i=0; i<numberOfChannels; i++){
+		uint8_t read = *adc_mem;
+		if(i == channel){
+			value = read;
+		}
+	}
 	return value; 
 }
 

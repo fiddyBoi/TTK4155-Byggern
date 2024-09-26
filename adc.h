@@ -8,6 +8,8 @@
 // Constants
 // ****************************************************
 #define ADC_BASE_ADDRESS 0x1400 // Base address of ADC
+#define JOYSTICK_X_CHANNEL 1
+#define JOYSTICK_Y_CHANNEL 0
 // ****************************************************
 
 // Types
