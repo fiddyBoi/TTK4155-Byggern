@@ -65,4 +65,11 @@ JoystickDirection JOY_GetDirection(){
 	return dir;
 }
 
+SliderPositions SLIDE_GetPositions(){
+	int left = ADC_Read(SLIDER_LEFT_CHANNEL)*100/255;
+	int right = ADC_Read(SLIDER_RIGHT_CHANNEL)*100/255;
+	SliderPositions pos = {left, right};
+	return pos;
+}
+
 // ****************************************************

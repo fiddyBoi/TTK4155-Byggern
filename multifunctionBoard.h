@@ -29,6 +29,11 @@ static const char *DIR_STRING[] = {
 	"LEFT", "RIGHT", "UP", "DOWN", "NEUTRAL",
 };
 
+typedef struct SliderPositions{
+	int left; // 0 to 100
+	int right; // 0 to 100
+} SliderPositions;
+
 // ****************************************************
 
 // Global variables
@@ -46,6 +51,9 @@ JoystickPosition JOY_GetPosition();
 
 // Returns the direction. Sensitivity can be modified my changing threshold in .C file.
 JoystickDirection JOY_GetDirection();
+
+// Returns the left and right slider positions in a struct 
+SliderPositions SLIDE_GetPositions();
 
 // ****************************************************
 #endif

@@ -39,6 +39,9 @@ void ADC_test(uint8_t channelToTest);
 // Testing the joystick
 void JOY_test();
 
+// Testing the slider
+void SLIDE_test();
+
 // **************************************************
 
 int main(void)
@@ -49,7 +52,7 @@ int main(void)
 	ADC_Init();
 	
 	// test shit
-	JOY_test();
+	SLIDE_test();
 }
 
  // Test functions - implementation
@@ -135,6 +138,14 @@ void JOY_test(){
 		JoystickDirection dir = JOY_GetDirection();
 		printf("Joystick position x:%d y:%d \n", pos.x, pos.y);
 		printf("Joystick direction: %s \n", DIR_STRING[dir]);
+		_delay_ms(500);
+	}
+}
+
+void SLIDE_test(){
+	while(1){
+		SliderPositions pos = SLIDE_GetPositions();
+		printf("Slider position left: %d right: %d \n", pos.left, pos.right);
 		_delay_ms(500);
 	}
 }
