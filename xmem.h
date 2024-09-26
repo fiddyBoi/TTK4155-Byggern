@@ -8,7 +8,7 @@
 
 // Constants
 // ****************************************************
-#define BASE_ADDRESS 0x1800 // Base address of SRAM
+#define SRAM_BASE_ADDRESS 0x1800 // Base address of SRAM
 // ****************************************************
 
 // Types

@@ -7,7 +7,7 @@
 
 // Constants
 // ****************************************************
-#define BASE_ADDRESS 0x1400 // Base address of ADC
+#define ADC_BASE_ADDRESS 0x1400 // Base address of ADC
 // ****************************************************
 
 // Types
