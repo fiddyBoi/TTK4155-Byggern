@@ -13,10 +13,12 @@
 #include <stdlib.h>
 #include <avr/io.h>
 #include <util/delay.h>
+#include <string.h>
 #include "uart.h"
 #include "xmem.h"
 #include "adc.h"
 #include "multifunctionBoard.h"
+#include "oled.h"
 
 // Test functions - prototypes
 // **************************************************
@@ -50,9 +52,24 @@ int main(void)
 	UART_Init(MYUBRR);
 	XMEM_Init();
 	ADC_Init();
+	OLED_Init();
 	
 	// test shit
-	JOY_test();
+	OLED_Reset();
+	char* mes1 = "Sondre";
+	char* mes2 = "Ingrid";
+	int len1 = strlen(mes1);
+	int len2 = strlen(mes2);
+	
+	OLED_Print(mes1, len1);
+	OLED_GoToLine(1);
+	OLED_Print(mes2, len2);
+	OLED_RightArrow();
+	OLED_GoToLine(0);
+	OLED_Print(mes1, len1);
+	OLED_LeftArrow();
+	
+	while(1){_delay_ms(100);}
 }
 
  // Test functions - implementation
