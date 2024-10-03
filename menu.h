@@ -20,6 +20,11 @@
 // Function prototypes
 // ****************************************************
 
+// Starts the menu
+void Menu_Start();
+
+// Polls the inputs and reacts accordingly
+void MENU_Navigate();
 
 // ****************************************************
 
