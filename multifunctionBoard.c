@@ -3,6 +3,7 @@
 // Includes
 // ****************************************************
 #include <stdint.h>
+#include <avr/io.h>
 #include "adc.h"
 // ****************************************************
 
@@ -27,6 +28,11 @@ int zeroPos = 157; // default value, will be changed by JOY_Calibrate
 
 // Implementation of the public functions
 // ****************************************************
+
+void JOY_Init(){
+	// Configure PE0 to input (joystick button)
+	DDRE &= ~(1 << PE0);
+}
 
 void JOY_Calibrate(){
 	uint8_t avrage;
@@ -63,6 +69,11 @@ JoystickDirection JOY_GetDirection(){
 	}
 
 	return dir;
+}
+
+int JOY_GetButton(){
+	// reads the value of PE0 (joystick button)
+	return !((PINE) & (1 << PINE0));
 }
 
 SliderPositions SLIDE_GetPositions(){

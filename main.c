@@ -42,8 +42,14 @@ void ADC_test(uint8_t channelToTest);
 // Testing the joystick
 void JOY_test();
 
+// Test joystick button
+void JOY_testButton();
+
 // Testing the slider
 void SLIDE_test();
+
+// Starts and tests the menu
+void MENU_test();
 
 // **************************************************
 
@@ -53,15 +59,11 @@ int main(void)
 	UART_Init(MYUBRR);
 	XMEM_Init();
 	ADC_Init();
+	JOY_Init();
 	OLED_Init();
 	
 	// test shit
-	OLED_Reset();
-	Menu_Start();
-	while(1){
-		MENU_Navigate();
-		_delay_ms(100);
-	}
+	JOY_testButton();
 }
 
  // Test functions - implementation
@@ -156,6 +158,23 @@ void SLIDE_test(){
 		SliderPositions pos = SLIDE_GetPositions();
 		printf("Slider position left: %d right: %d \n", pos.left, pos.right);
 		_delay_ms(500);
+	}
+}
+
+void MENU_test(){
+	OLED_Reset();
+	Menu_Start();
+	while(1){
+		MENU_Navigate();
+		_delay_ms(100);
+	}
+}
+
+void JOY_testButton(){
+	while(1){
+		int button = JOY_GetButton();
+		printf("Joystick button: %d \n", button);
+		_delay_ms(100);
 	}
 }
  // **************************************************
