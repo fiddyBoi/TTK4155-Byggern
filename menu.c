@@ -91,6 +91,7 @@ void Menu_Start(){
 }
 
 void MENU_Navigate(){
+	// Direction handling
 	JoystickDirection dir = JOY_GetDirection();
 	switch(state){
 		case HOME_MENU:
@@ -136,11 +137,27 @@ void MENU_Navigate(){
 					state = HOME_MENU;
 					selectedOption = 0;
 					render();
-				break;
+					break;
 			}
 			break;
 	}
-	return;
+	
+	// Button handling
+	int buttonInput = JOY_GetButton();
+	if(!buttonInput){
+		return;
+	}
+	// Button is pressed
+	switch(state){
+		case HOME_MENU:
+			if(homeOptions[selectedOption] == "Start"){
+				printf("Start was selected!\n");
+			}
+			break;
+		case DIFFICULTY_MENU:
+			printf("Difficulty %s was selected\n",  difficultyOptions[selectedOption]);
+			break;
+	}
 }
 
 // ****************************************************

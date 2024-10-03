@@ -63,7 +63,7 @@ int main(void)
 	OLED_Init();
 	
 	// test shit
-	JOY_testButton();
+	MENU_test();
 }
 
  // Test functions - implementation
