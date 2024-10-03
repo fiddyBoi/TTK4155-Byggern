@@ -97,16 +97,11 @@ void MENU_Navigate(){
 		case HOME_MENU:
 			switch(dir){
 				case UP:
-					// temporary solution because C does not like mod with negative numbers
-					if(selectedOption == 0){
-						selectedOption = NUM_HOME_OPTIONS-1;
-					}else{
-						selectedOption--;
-					}
+					selectedOption = (selectedOption - 1 + NUM_HOME_OPTIONS) % NUM_HOME_OPTIONS;
 					render();
 					break;
 				case DOWN:
-					selectedOption = (selectedOption + 1) % NUM_HOME_OPTIONS;
+					selectedOption = (selectedOption + 1 + NUM_HOME_OPTIONS) % NUM_HOME_OPTIONS;
 					render();
 					break;
 				case RIGHT:
@@ -121,16 +116,11 @@ void MENU_Navigate(){
 		case DIFFICULTY_MENU:
 			switch(dir){
 				case UP:
-					// temporary solution because C does not like mod with negative numbers
-					if(selectedOption == 0){
-						selectedOption = NUM_DIFFICULTY_OPTIONS-1;
-						}else{
-						selectedOption--;
-					}
+					selectedOption = (selectedOption - 1 + NUM_DIFFICULTY_OPTIONS) % NUM_DIFFICULTY_OPTIONS;
 					render();
 					break;
 				case DOWN:
-					selectedOption = (selectedOption + 1) % NUM_DIFFICULTY_OPTIONS;
+					selectedOption = (selectedOption + 1 + NUM_DIFFICULTY_OPTIONS) % NUM_DIFFICULTY_OPTIONS;
 					render();
 					break;
 				case LEFT:
