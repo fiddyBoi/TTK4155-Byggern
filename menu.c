@@ -153,6 +153,10 @@ void MENU_Navigate(){
 			if(homeOptions[selectedOption] == "Start"){
 				printf("Start was selected!\n");
 			}
+			else if(homeOptions[selectedOption] == "Calibrate"){
+				printf("Calibrate was selected\n");
+				JOY_Calibrate();
+			}
 			break;
 		case DIFFICULTY_MENU:
 			printf("Difficulty %s was selected\n",  difficultyOptions[selectedOption]);
