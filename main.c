@@ -52,7 +52,7 @@ int main(void)
 	ADC_Init();
 	
 	// test shit
-	SLIDE_test();
+	JOY_test();
 }
 
  // Test functions - implementation
