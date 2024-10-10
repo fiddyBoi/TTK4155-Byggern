@@ -90,7 +90,7 @@ void Menu_Start(){
 	render();
 }
 
-void MENU_Navigate(){
+void MENU_PollAndUpdate(){
 	// Direction handling
 	JoystickDirection dir = JOY_GetDirection();
 	switch(state){

@@ -24,7 +24,7 @@
 void Menu_Start();
 
 // Polls the inputs and reacts accordingly
-void MENU_Navigate();
+void MENU_PollAndUpdate();
 
 // ****************************************************
 

@@ -165,7 +165,7 @@ void MENU_test(){
 	OLED_Reset();
 	Menu_Start();
 	while(1){
-		MENU_Navigate();
+		MENU_PollAndUpdate();
 		_delay_ms(100);
 	}
 }
