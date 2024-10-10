@@ -11,6 +11,11 @@
 
 // Types
 // ****************************************************
+typedef struct CanMessage{
+	unsigned short id;
+	unsigned char length;
+	unsigned char data[8];
+} CanMessage;
 // ****************************************************
 
 // Global variables
@@ -19,5 +24,11 @@
 
 // Function prototypes
 // ****************************************************
+
+// Remember to call MCP2515_Init() first.
+void CAN_Init();
+
+void CAN_Transmit(CanMessage message);
+
 // ****************************************************
 #endif 
