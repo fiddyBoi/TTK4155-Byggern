@@ -72,8 +72,8 @@ JoystickDirection JOY_GetDirection(){
 }
 
 int JOY_GetButton(){
-	// reads the value of PE0 (joystick button)
-	return !((PINE) & (1 << PINE0));
+	// reads the value of PE2 (joystick button)
+	return !((PINE) & (1 << PINE2));
 }
 
 SliderPositions SLIDE_GetPositions(){

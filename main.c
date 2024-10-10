@@ -71,7 +71,7 @@ int main(void)
 	SPI_Init();
 	
 	// test shit
-	SPI_testReceive();
+	JOY_testButton();
 }
 
  // Test functions - implementation
