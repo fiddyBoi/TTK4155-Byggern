@@ -20,6 +20,7 @@
 #include "multifunctionBoard.h"
 #include "oled.h"
 #include "menu.h"
+#include "spi.h"
 
 // Test functions - prototypes
 // **************************************************
@@ -51,6 +52,12 @@ void SLIDE_test();
 // Starts and tests the menu
 void MENU_test();
 
+// Tries to do an SPI transmit
+void SPI_testTransmit();
+
+// Tries to do an SPI receive
+void SPI_testReceive();
+
 // **************************************************
 
 int main(void)
@@ -61,9 +68,10 @@ int main(void)
 	ADC_Init();
 	JOY_Init();
 	OLED_Init();
+	SPI_Init();
 	
 	// test shit
-	MENU_test();
+	SPI_testReceive();
 }
 
  // Test functions - implementation
@@ -174,6 +182,21 @@ void JOY_testButton(){
 	while(1){
 		int button = JOY_GetButton();
 		printf("Joystick button: %d \n", button);
+		_delay_ms(100);
+	}
+}
+
+void SPI_testTransmit(){
+	while(1){
+		unsigned char data = 0xAB;
+		SPI_Transmit(data);
+		_delay_ms(100);
+	}
+}
+
+void SPI_testReceive(){
+	while(1){
+		unsigned char data = SPI_Receive();
 		_delay_ms(100);
 	}
 }
