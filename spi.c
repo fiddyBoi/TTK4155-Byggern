@@ -31,22 +31,32 @@ void SPI_Init(){
 	SPCR = (1<<SPE)|(1<<MSTR)|(1<<SPR0);
 }
 
+void SPI_Ss(int ss){
+	if(ss == 1){
+		// Select
+		PORTB &= ~(1 << PB4); // Set SS low
+	}
+	if(ss == 0){
+		// De-select
+		PORTB |= (1 << PB4); // Set SS high
+	} 
+}
+
 void SPI_Transmit(unsigned char data){
 	/* Start transmission */
-	PORTB &= ~(1 << PB4); // Set SS low
 	SPDR = data;
+	
 	/* Wait for transmission complete */
 	while(!(SPSR & (1<<SPIF))){};
-	PORTB |= (1 << PB4); // Set SS high
 }
 
 unsigned char SPI_Receive(){
 	/* Start transmission */
-	PORTB &= ~(1 << PB4); // Set SS low
 	SPDR = 0; // need to add a dummy byte to start the transmission
+	
 	/* Wait for transmission complete */
 	while(!(SPSR & (1<<SPIF))){};
-	PORTB |= (1 << PB4); // Set SS high
+		
 	/* Return data register */
 	return SPDR;
 }

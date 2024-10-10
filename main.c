@@ -189,14 +189,18 @@ void JOY_testButton(){
 void SPI_testTransmit(){
 	while(1){
 		unsigned char data = 0xAB;
+		SPI_Ss(1);
 		SPI_Transmit(data);
+		SPI_Ss(0);
 		_delay_ms(100);
 	}
 }
 
 void SPI_testReceive(){
 	while(1){
+		SPI_Ss(1);
 		unsigned char data = SPI_Receive();
+		SPI_Ss(0);
 		_delay_ms(100);
 	}
 }

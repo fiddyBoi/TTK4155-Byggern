@@ -25,6 +25,9 @@
 // fclock / 16
 void SPI_Init();
 
+// 1: (selected), 0: (de-selected)
+void SPI_Ss(int ss);
+
 // Blocking transmit of one char over SPI
 void SPI_Transmit(unsigned char data);
 
