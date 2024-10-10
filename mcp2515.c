@@ -27,8 +27,6 @@
 
 void MCP2515_Init(){
 	MCP2515_Reset() ; // Send reset - command
-	
-	// More initialization?
 }
 
 void MCP2515_Reset(){

@@ -21,6 +21,8 @@
 #include "oled.h"
 #include "menu.h"
 #include "spi.h"
+#include "mcp2515.h"
+#include "mcp2515_regs.h"
 
 // Test functions - prototypes
 // **************************************************
@@ -58,6 +60,9 @@ void SPI_testTransmit();
 // Tries to do an SPI receive
 void SPI_testReceive();
 
+// Tries to send an Reset command to the CAN controller 
+void MCP2515_testReset();
+
 // **************************************************
 
 int main(void)
@@ -69,9 +74,10 @@ int main(void)
 	JOY_Init();
 	OLED_Init();
 	SPI_Init();
+	MCP2515_Init();
 	
 	// test shit
-	MENU_test();
+	MCP2515_testReset();
 }
 
  // Test functions - implementation
@@ -192,7 +198,7 @@ void SPI_testTransmit(){
 		SPI_Ss(1);
 		SPI_Transmit(data);
 		SPI_Ss(0);
-		_delay_ms(100);
+		_delay_ms(300);
 	}
 }
 
@@ -201,6 +207,13 @@ void SPI_testReceive(){
 		SPI_Ss(1);
 		unsigned char data = SPI_Receive();
 		SPI_Ss(0);
+		_delay_ms(100);
+	}
+}
+
+void MCP2515_testReset(){
+	while(1){
+		MCP2515_Reset();
 		_delay_ms(100);
 	}
 }
