@@ -83,7 +83,7 @@ int main(void)
 	CAN_Init();
 	
 	// test shit
-	CAN_testLoopBack();
+	MENU_test();
 }
 
  // Test functions - implementation
