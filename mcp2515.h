@@ -42,6 +42,13 @@ void MCP2515_RequestToSend(unsigned char RTS);
 // registers (see "register map" in datasheet)
 void MCP2515_BitModify(unsigned char address, unsigned char mask, unsigned char data);
 
+// Eliminates the eight-bit addresss required by normal Write command. 
+// TxN: MCP_LOAD_TX0 etc in mcp2515_regs.h
+void MCP2515_LoadTxBuffer(unsigned char TxN, unsigned char id, unsigned char* data, unsigned char length);
+
+// Same as LoadTxBuffer but for read. Clears flag automatically
+void MCP2515_ReadRxBuffer(unsigned char RxN, unsigned char * id, unsigned char * data, unsigned char * length);
+
 // Re-initializes the internal registers and set 
 // Configuration mode
 void MCP2515_Reset();

@@ -30,8 +30,8 @@ int zeroPos = 157; // default value, will be changed by JOY_Calibrate
 // ****************************************************
 
 void JOY_Init(){
-	// Configure PE0 to input (joystick button)
-	DDRE &= ~(1 << PE0);
+	// Configure PE2 to input (joystick button)
+	DDRE &= ~(1 << PE2);
 }
 
 void JOY_Calibrate(){

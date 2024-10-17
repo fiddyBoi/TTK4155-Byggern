@@ -68,6 +68,46 @@ void MCP2515_BitModify(unsigned char address, unsigned char mask, unsigned char 
 	SPI_Ss(0);
 }
 
+void MCP2515_LoadTxBuffer(unsigned char TxN, unsigned char id, unsigned char* data, unsigned char length){
+	SPI_Ss(1);
+	SPI_Transmit(TxN);
+	// SIDH
+	SPI_Transmit(id);
+	// SIDL
+	SPI_Transmit(0x0);
+	// EID8
+	SPI_Transmit(0x0);
+	// EID0
+	SPI_Transmit(0x0);
+	// DLC
+	SPI_Transmit(length);
+	// Data
+	for(int i = 0; i < length; i++){
+		SPI_Transmit(data[i]);
+	}
+	SPI_Ss(0);
+}
+
+void MCP2515_ReadRxBuffer(unsigned char RxN, unsigned char * id, unsigned char * data, unsigned char * length){
+	SPI_Ss(1);
+	SPI_Transmit(RxN);
+	// SIDH
+	*id = SPI_Receive();
+	// SIDL
+	SPI_Receive();
+	// EID8
+	SPI_Receive();
+	// EID0
+	SPI_Receive();
+	// DLC
+	*length = SPI_Receive(); // must possibly mask?
+	// Data
+	for(int i = 0; i < *length; i++){
+		data[i] = SPI_Receive();
+	}
+	SPI_Ss(0);
+}
+
 unsigned char MCP2515_ReadStatus(){
 	unsigned char status;
 	SPI_Ss(1);

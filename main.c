@@ -23,6 +23,7 @@
 #include "spi.h"
 #include "mcp2515.h"
 #include "mcp2515_regs.h"
+#include "can.h"
 
 // Test functions - prototypes
 // **************************************************
@@ -63,6 +64,10 @@ void SPI_testReceive();
 // Tries to send an Reset command to the CAN controller 
 void MCP2515_testReset();
 
+// Tries to send and receive CAN in loopback mode
+// NB: must have loopbackmode in init
+void CAN_testLoopBack();
+
 // **************************************************
 
 int main(void)
@@ -75,9 +80,10 @@ int main(void)
 	OLED_Init();
 	SPI_Init();
 	MCP2515_Init();
+	CAN_Init();
 	
 	// test shit
-	MCP2515_testReset();
+	CAN_testLoopBack();
 }
 
  // Test functions - implementation
@@ -215,6 +221,32 @@ void MCP2515_testReset(){
 	while(1){
 		MCP2515_Reset();
 		_delay_ms(100);
+	}
+}
+
+void CAN_testLoopBack(){
+	CanMessage message = {
+		.id = 5,
+		.length = 2,
+		.data = {1,2}
+	};
+	_delay_ms(100);
+	CAN_Tx(message);
+	_delay_ms(100);
+	while(1){
+		_delay_ms(1000);
+		if(CAN_Poll()){
+			printf("CAN polled\n");
+			CanMessage r_message;
+			int status = CAN_Rx(&r_message);
+			if(status){
+				printf("id: %d\n",r_message.id);
+				printf("length: %d\n", r_message.length);
+				printf("data: %d , %d\n", r_message.data[0], r_message.data[1]);
+			}else{
+				printf("No message\n");
+			}
+		}
 	}
 }
  // **************************************************
