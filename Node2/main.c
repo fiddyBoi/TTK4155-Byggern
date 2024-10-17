@@ -1,8 +1,13 @@
+//#define F_CPU 84000000UL
+#define F_CPU 4000000UL // somehow worked with this but idk
+#define BAUD 9600UL
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <sam.h>
 #include <sam3x8e.h>
 #include "time.h"
+#include "uart.h"
 // Test functions - prototypes
 // **************************************************
 void IO_test();
@@ -11,7 +16,8 @@ void IO_test();
 int main(void)
 {
 	// Init drivers
-	
+	uart_init(F_CPU, BAUD);
+
 	// Disable watchdog
 	WDT->WDT_MR = WDT_MR_WDDIS;
 
@@ -29,10 +35,12 @@ void IO_test(){
 	PIOB->PIO_OER = PIO_OER_P13;
 	while(1){
 		// Write
+		printf("up \n");
 		PIOB->PIO_SODR = PIO_SODR_P13;
-		time_spinFor(msecs(200));
+		time_spinFor(msecs(100));
+		printf("down \n");
 		PIOB->PIO_CODR = PIO_SODR_P13;
-		time_spinFor(msecs(200));
+		time_spinFor(msecs(100));
 	}
 
 }
