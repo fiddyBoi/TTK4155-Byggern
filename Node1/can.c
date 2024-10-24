@@ -9,6 +9,7 @@
 
 // Private macros and constants
 // ****************************************************
+uint8_t BRP = 8;
 // ****************************************************
 
 // Private types
@@ -34,8 +35,17 @@ void CAN_Init(){
 	// Enable Rollover (fill RX1 if RX0 is full)
 	unsigned char MCP_ROLLOVER = 0x2;
 	MCP2515_Write(MCP_RXB0CTRL, (1 << MCP_ROLLOVER));
+	// Set config mode
+	//MCP2515_Write(MCP_CANCTRL, MODE_CONFIG); Not needed because we are already in config mode?
+	//Configure can bus timing
+	uint8_t BRP = CAN_F_CPU / (2 * NUM_TQ * BAUDRATE);
+	MCP2515_Write(MCP_CNF1, SJW4 | (BRP-1));
+	MCP2515_Write(MCP_CNF2, BTLMODE | SAMPLE_3X | ((PHASE1 - 1) << 3) | (PROPAG - 1));
+	MCP2515_Write(MCP_CNF3, WAKFIL_DISABLE | (PHASE2 - 1));
 	// Set loop back mode
-	MCP2515_Write(MCP_CANCTRL, MODE_LOOPBACK);
+	//MCP2515_Write(MCP_CANCTRL, MODE_LOOPBACK);
+	// Set Normal mode
+	MCP2515_Write(MCP_CANCTRL, MODE_NORMAL);
 }
 
 void CAN_Tx(CanMessage message){

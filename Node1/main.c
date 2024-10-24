@@ -68,6 +68,10 @@ void MCP2515_testReset();
 // NB: must have loopbackmode in init
 void CAN_testLoopBack();
 
+//Tries to send simple CAN message in Normal mode
+// NB: must have Normal mode in init
+void CAN_testNormalMode();
+
 // **************************************************
 
 int main(void)
@@ -83,7 +87,7 @@ int main(void)
 	CAN_Init();
 	
 	// test shit
-	MENU_test();
+	CAN_testNormalMode();
 }
 
  // Test functions - implementation
@@ -249,4 +253,18 @@ void CAN_testLoopBack(){
 		}
 	}
 }
+
+void CAN_testNormalMode() {
+	CanMessage message = {
+		.id = 5,
+		.length = 2,
+		.data = {1,2}
+	};
+	while(1) {
+		_delay_ms(1000);
+		CAN_Tx(message);
+		printf("Message sent\n");
+	}
+}
+
  // **************************************************
