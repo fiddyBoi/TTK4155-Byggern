@@ -9,6 +9,7 @@
 #include "time.h"
 #include "uart.h"
 #include "can.h"
+#include "messages.h"
 // Test functions - prototypes
 // **************************************************
 //IO test for Node 2
@@ -19,6 +20,9 @@ void CAN_receiveTest();
 
 //Tries to send a can message
 void CAN_transmitTest();
+
+// Tries to receive joystick data
+void MSG_Joystick();
 
 
 // **************************************************
@@ -41,7 +45,7 @@ int main(void)
 	// test shit
 	printf("Start program:\n");
 	//CAN_transmitTest();
-	CAN_transmitTest();
+	MSG_Joystick();
 }
 
  // Test functions - implementation
@@ -67,7 +71,7 @@ void CAN_receiveTest() {
 	CanMsg r_message;
 	while(1){
 		time_spinFor(msecs(200));
-		if(can_rx(&r_message)){
+		if(CAN_Rx(&r_message)){
 			can_printmsg(r_message);
 		}else{
 			printf("No message \n");
@@ -83,8 +87,23 @@ void CAN_transmitTest(){
 	};
 	while(1) {
 		time_spinFor(msecs(200));
-		can_tx(message);
+		CAN_Tx(message);
 		printf("Message sent\n");
+	}
+}
+
+
+void MSG_Joystick(){
+	CanMsg r_message;
+	while(1){
+		time_spinFor(msecs(200));
+		if(CAN_Rx(&r_message)){
+			can_printmsg(r_message);
+			JoystickPosition pos = toJoyPos(r_message);
+			printf("Joystick position x:%d y:%d \n", pos.x, pos.y);
+			}else{
+			printf("No message \n");
+		}
 	}
 }
 

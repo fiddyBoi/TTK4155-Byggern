@@ -69,7 +69,7 @@ void can_init(CanInit init, uint8_t rxInterrupt){
 }
 
 
-void can_tx(CanMsg m){
+void CAN_Tx(CanMsg m){
     while(!(CAN0->CAN_MB[txMailbox].CAN_MSR & CAN_MSR_MRDY)){}
     
     // Set message ID and use CAN 2.0B protocol
@@ -86,7 +86,7 @@ void can_tx(CanMsg m){
     CAN0->CAN_MB[txMailbox].CAN_MCR = (m.length << CAN_MCR_MDLC_Pos) | CAN_MCR_MTCR;
 }
 
-uint8_t can_rx(CanMsg* m){
+int CAN_Rx(CanMsg* m){
     if(!(CAN0->CAN_MB[rxMailbox].CAN_MSR & CAN_MSR_MRDY)){
         return 0;
     }

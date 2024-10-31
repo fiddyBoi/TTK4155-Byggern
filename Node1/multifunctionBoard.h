@@ -2,7 +2,6 @@
 #define multifunctionBoard_H
 // Includes
 // ****************************************************
-#include <stdint.h>
 // ****************************************************
 
 // Constants
@@ -62,6 +61,5 @@ int JOY_GetButton();
 
 // Returns the left and right slider positions in a struct 
 SliderPositions SLIDE_GetPositions();
-
 // ****************************************************
 #endif

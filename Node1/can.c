@@ -45,26 +45,26 @@ void CAN_Init(){
 	MCP2515_Write(MCP_CANCTRL, MODE_NORMAL);
 }
 
-void CAN_Tx(CanMessage message){
+void CAN_Tx(CanMsg message){
 	// Fill a transmit buffer TX0
-	MCP2515_LoadTxBuffer(MCP_LOAD_TX0, message.id, message.data, message.length);
+	MCP2515_LoadTxBuffer(MCP_LOAD_TX0, message.id, message.byte, message.length);
 	// Transmit transmit buffer
 	MCP2515_RequestToSend(MCP_RTS_TX0);
 }
 
-int CAN_Rx(CanMessage *message){
+int CAN_Rx(CanMsg *message){
 	// Read register
 	unsigned char canint_reg = MCP2515_Read(MCP_CANINTF);
 	int Rx0IF = canint_reg & MCP_RX0IF;
 	int Rx1IF = canint_reg & MCP_RX1IF;
 	// Decode 
 	if(Rx0IF){
-		MCP2515_ReadRxBuffer(MCP_READ_RX0, &(message->id), &(message->data), &(message->length));
+		MCP2515_ReadRxBuffer(MCP_READ_RX0, &(message->id), &(message->byte), &(message->length));
 		return 1; 
 	}
 	
 	if(Rx1IF){
-		MCP2515_ReadRxBuffer(MCP_READ_RX1, &(message->id), &(message->data), &(message->length));
+		MCP2515_ReadRxBuffer(MCP_READ_RX1, &(message->id), &(message->byte), &(message->length));
 		return 1;
 	}
 	return 0;

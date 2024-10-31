@@ -24,6 +24,7 @@
 #include "mcp2515.h"
 #include "mcp2515_regs.h"
 #include "can.h"
+#include "messages.h"
 
 // Test functions - prototypes
 // **************************************************
@@ -76,6 +77,9 @@ void CAN_testNormalModeTx();
 // NB: must have Normal mode in init
 void CAN_testNormalModeRx();
 
+// Sends joystick data periodically to node 2
+void MSG_Joystick();
+
 // **************************************************
 
 int main(void)
@@ -91,7 +95,7 @@ int main(void)
 	CAN_Init();
 	
 	// test shit
-	CAN_testNormalModeRx();
+	MSG_Joystick();
 	
 }
 
@@ -234,10 +238,10 @@ void MCP2515_testReset(){
 }
 
 void CAN_testLoopBack(){
-	CanMessage message = {
+	CanMsg message = {
 		.id = 5,
 		.length = 2,
-		.data = {1,2}
+		.byte = {1,2}
 	};
 	_delay_ms(100);
 	CAN_Tx(message);
@@ -246,12 +250,12 @@ void CAN_testLoopBack(){
 		_delay_ms(1000);
 		if(CAN_Poll()){
 			printf("CAN polled\n");
-			CanMessage r_message;
+			CanMsg r_message;
 			int status = CAN_Rx(&r_message);
 			if(status){
 				printf("id: %d\n",r_message.id);
 				printf("length: %d\n", r_message.length);
-				printf("data: %d , %d\n", r_message.data[0], r_message.data[1]);
+				printf("data: %d , %d\n", r_message.byte[0], r_message.byte[1]);
 			}else{
 				printf("No message\n");
 			}
@@ -260,10 +264,10 @@ void CAN_testLoopBack(){
 }
 
 void CAN_testNormalModeTx() {
-	CanMessage message = {
+	CanMsg message = {
 		.id = 255,
 		.length = 2,
-		.data = {1,2}
+		.byte = {1,2}
 	};
 	while(1) {
 		_delay_ms(1000);
@@ -273,7 +277,7 @@ void CAN_testNormalModeTx() {
 }
 
 void CAN_testNormalModeRx(){
-	CanMessage message; 
+	CanMsg message; 
 	while(1){
 		_delay_ms(50);
 		if(CAN_Poll()){
@@ -282,11 +286,22 @@ void CAN_testNormalModeRx(){
 			if(status){
 				printf("id: %d\n",message.id);
 				printf("length: %d\n", message.length);
-				printf("data: %d , %d\n", message.data[0], message.data[1]);
+				printf("data: %d , %d\n", message.byte[0], message.byte[1]);
 				}else{
 				printf("No message\n");
 			}
 		}
+	}
+}
+
+void MSG_Joystick(){
+	while(1){
+		_delay_ms(100);
+		JoystickPosition pos = JOY_GetPosition();
+		printf("Joystick position x:%d y:%d \n", pos.x, pos.y);
+		CanMsg msg = toCanMsg(pos);
+		CAN_Tx(msg);
+		printf("Message sent\n");
 	}
 }
 

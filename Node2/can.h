@@ -83,11 +83,11 @@ struct CanMsg {
 // Send a CAN message on the bus. 
 // Blocks if the bus does not receive the message (typically because one of the 
 // receiving nodes has not cleared a buffer)
-void can_tx(CanMsg m);
+void CAN_Tx(CanMsg m);
 
 // Receive a CAN message.
 // Does not block. Returns 0 if there is no message, 1 otherwise
-uint8_t can_rx(CanMsg* m);
+int CAN_Rx(CanMsg* m);
 
 // Print a CAN message (using `printf`)
 void can_printmsg(CanMsg m);
