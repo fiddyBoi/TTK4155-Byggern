@@ -17,6 +17,9 @@ void IO_test();
 //Tries to receive a message from node 1
 void CAN_receiveTest();
 
+//Tries to send a can message
+void CAN_transmitTest();
+
 
 // **************************************************
 
@@ -24,21 +27,22 @@ int main(void)
 {
 	// Init drivers
 	SystemInit();
-	uart_init(F_CPU, BAUD);
-	//Set to 16 TQ
-	//BAUDRATE 250000
-	//Propag = 2
-	//Phase1 = 6
-	//Phase2 = 7
-	//BRP = 9.5 because of BRP = (250ns * F_CPU) - 1
-	can_init((CanInit){.brp = 9, .phase1 = 6, .phase2 = 7, .propag = 2, .sjw = 4}, 0); 
-
 	// Disable watchdog
 	WDT->WDT_MR = WDT_MR_WDDIS;
+		
+	uart_init(F_CPU, BAUD);
+	//Set to 16 TQ
+	//BAUDRATE 125000
+	//Propag = 4
+	//Phase1 = 5
+	//Phase2 = 6
+	//BRP = 9.5 because of BRP = (250ns * F_CPU) - 1
+	can_init((CanInit){.brp = 36, .phase1 = 5, .phase2 = 6, .propag = 4, .sjw = 4}, 0); 
+
+
 
 	// test shit
-	//CAN_receiveTest();
-	CAN_receiveTest();
+	CAN_transmitTest();
 }
 
  // Test functions - implementation
@@ -61,18 +65,29 @@ void IO_test(){
 }
 
 void CAN_receiveTest() {
-	while(1) {
-		time_spinFor(msecs(1000));
-		CanMsg r_message;
-		if (can_rx(&r_message)) {
+	CanMsg r_message;
+	while(1){
+		time_spinFor(msecs(200));
+		if(can_rx(&r_message)){
 			can_printmsg(r_message);
+		}else{
+			printf("No message \n");
 		}
-		else {
-			printf("No message\n");
-		}
-	}
+	}	
 }
 
+void CAN_transmitTest(){
+	CanMsg message = {
+		.id = 5,
+		.length = 2,
+		.byte = {1,2}
+	};
+	while(1) {
+		time_spinFor(msecs(200));
+		can_tx(message);
+		printf("Message sent\n");
+	}
+}
 
 
  // **************************************************

@@ -70,7 +70,11 @@ void CAN_testLoopBack();
 
 //Tries to send simple CAN message in Normal mode
 // NB: must have Normal mode in init
-void CAN_testNormalMode();
+void CAN_testNormalModeTx();
+
+//Tries to receive a simple CAN message in Normal mode
+// NB: must have Normal mode in init
+void CAN_testNormalModeRx();
 
 // **************************************************
 
@@ -87,7 +91,7 @@ int main(void)
 	CAN_Init();
 	
 	// test shit
-	CAN_testNormalMode();
+	CAN_testNormalModeRx();
 }
 
  // Test functions - implementation
@@ -254,9 +258,9 @@ void CAN_testLoopBack(){
 	}
 }
 
-void CAN_testNormalMode() {
+void CAN_testNormalModeTx() {
 	CanMessage message = {
-		.id = 5,
+		.id = 255,
 		.length = 2,
 		.data = {1,2}
 	};
@@ -264,6 +268,24 @@ void CAN_testNormalMode() {
 		_delay_ms(1000);
 		CAN_Tx(message);
 		printf("Message sent\n");
+	}
+}
+
+void CAN_testNormalModeRx(){
+	CanMessage message; 
+	while(1){
+		_delay_ms(50);
+		if(CAN_Poll()){
+			printf("CAN polled\n");
+			int status = CAN_Rx(&message);
+			if(status){
+				printf("id: %d\n",message.id);
+				printf("length: %d\n", message.length);
+				printf("data: %d , %d\n", message.data[0], message.data[1]);
+				}else{
+				printf("No message\n");
+			}
+		}
 	}
 }
 
