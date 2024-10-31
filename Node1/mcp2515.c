@@ -73,11 +73,9 @@ void MCP2515_LoadTxBuffer(unsigned char TxN, unsigned char id, unsigned char* da
 	SPI_Transmit(TxN);
 	// SIDH
 	unsigned char idH = id >> 3; 
-	printf("idH 0x%X \n", idH);
 	SPI_Transmit(idH);
 	// SIDL
-	unsigned char idL = (id << 5); 
-	printf("idL 0x%X \n", idL);
+	unsigned char idL = (id << 5);
 	SPI_Transmit(idL);
 	// EID8
 	SPI_Transmit(0x0);

@@ -7,7 +7,7 @@
 
 // Constants
 // ****************************************************
-#define BAUDRATE 125000
+#define BAUDRATE 62500
 #define NUM_TQ 16
 #define PROPAG 4
 #define PHASE1 5
