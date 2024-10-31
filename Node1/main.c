@@ -92,6 +92,7 @@ int main(void)
 	
 	// test shit
 	CAN_testNormalModeRx();
+	
 }
 
  // Test functions - implementation

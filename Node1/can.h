@@ -7,11 +7,11 @@
 
 // Constants
 // ****************************************************
-#define BAUDRATE 62500
+#define BAUDRATE 250000
 #define NUM_TQ 16
-#define PROPAG 4
-#define PHASE1 5
-#define PHASE2 6
+#define PROPAG 2
+#define PHASE1 6
+#define PHASE2 7
 #define CAN_F_CPU 16000000
 // ****************************************************
 

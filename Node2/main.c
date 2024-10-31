@@ -32,17 +32,15 @@ int main(void)
 		
 	uart_init(F_CPU, BAUD);
 	//Set to 16 TQ
-	//BAUDRATE 62500
-	//Propag = 4
-	//Phase1 = 5
-	//Phase2 = 6
-	//BRP = 9.5 because of BRP = (250ns * F_CPU) - 1
-	can_init((CanInit){.brp = 72, .phase1 = 5, .phase2 = 6, .propag = 4, .sjw = 4}, 0); 
-
-
+	//BAUDRATE 250000
+	//Propag = 2
+	//Phase1 = 6
+	//Phase2 = 7
+	can_init((CanInit){.brp = 20, .phase1 = 6-1, .phase2 = 7-1, .propag = 2-1, .sjw = 4}, 0); 
 
 	// test shit
 	printf("Start program:\n");
+	//CAN_transmitTest();
 	CAN_transmitTest();
 }
 
