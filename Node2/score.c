@@ -9,7 +9,7 @@
 
 // Private macros and constants
 // ****************************************************
-const uint16_t THRESHOLD = 1500; // MODIFY THIS LATER
+const uint16_t THRESHOLD = 1500;
 const uint64_t timeout = 1; // // min 1 second between points
 // ****************************************************
 
@@ -37,7 +37,7 @@ void SCORE_Init(){
 }
 
 void SCORE_Poll(){
-	if(ADC_Read() < THRESHOLD){ // score! (MODIFY > or < LATER)
+	if(ADC_Read() < THRESHOLD){ // score! 
 		if((time_now() - timestamp) > TIMEOUT){ // over 1 second since last time
 			score += 1;
 			timestamp = time_now();
