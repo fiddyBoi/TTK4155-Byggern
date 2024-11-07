@@ -27,6 +27,9 @@ void MSG_Joystick();
 // test PWM 
 void PWM_test();
 
+// PWM test with Joystick
+void PWM_testWithJoystick();
+
 // **************************************************
 
 int main(void)
@@ -47,7 +50,7 @@ int main(void)
 	
 	// test shit
 	printf("Start program:\n");
-	PWM_test();
+	PWM_testWithJoystick();
 	while(1){};
 }
 
@@ -132,4 +135,18 @@ void PWM_test(){
 	}
 }
 
+void PWM_testWithJoystick(){
+		CanMsg r_message;
+		while(1){
+			time_spinFor(msecs(200));
+			if(CAN_Rx(&r_message)){
+				can_printmsg(r_message);
+				JoystickPosition pos = toJoyPos(r_message);
+				printf("Joystick position x:%d y:%d \n", pos.x, pos.y);
+				PWM_Output(pos.x);
+				}else{
+				printf("No message \n");
+			}
+		}
+}
  // **************************************************
