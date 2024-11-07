@@ -3,4 +3,4 @@ Notes:
 - in the future we might want to combine all multifunciton board data into one struct rather than having Joystick etc seperate
 
 Known bugs:
-- The message module does not handle negative numbers properly
+
