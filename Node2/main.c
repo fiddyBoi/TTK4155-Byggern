@@ -60,7 +60,7 @@ int main(void)
 	
 	// test shit
 	printf("Start program:\n");
-	SCORE_test();
+	PWM_testWithJoystick();
 	while(1){};
 }
 
