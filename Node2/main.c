@@ -1,5 +1,4 @@
 #define F_CPU 84000000UL
-//#define F_CPU 4000000UL // somehow worked with this but idk
 #define BAUD 9600UL
 
 #include <stdio.h>
@@ -10,6 +9,7 @@
 #include "uart.h"
 #include "can.h"
 #include "messages.h"
+#include "pwm.h"
 // Test functions - prototypes
 // **************************************************
 //IO test for Node 2
@@ -24,6 +24,8 @@ void CAN_transmitTest();
 // Tries to receive joystick data
 void MSG_Joystick();
 
+// test PWM 
+void PWM_test();
 
 // **************************************************
 
@@ -41,11 +43,12 @@ int main(void)
 	//Phase1 = 6
 	//Phase2 = 7
 	can_init((CanInit){.brp = 20, .phase1 = 6-1, .phase2 = 7-1, .propag = 2-1, .sjw = 4}, 0); 
-
+	PWM_Init();
+	
 	// test shit
 	printf("Start program:\n");
-	//CAN_transmitTest();
-	MSG_Joystick();
+	PWM_test();
+	while(1){};
 }
 
  // Test functions - implementation
@@ -107,5 +110,26 @@ void MSG_Joystick(){
 	}
 }
 
+void PWM_test(){
+	while(1){
+		//normal 
+		PWM_Output(-100);
+		printf("0.9 \n");
+		time_spinFor(msecs(2000));
+		PWM_Output(100);
+		printf("2.1 \n");
+		time_spinFor(msecs(2000));
+		PWM_Output(0);
+		printf("something \n");
+		time_spinFor(msecs(2000));
+		// fucked
+		PWM_Output(200);
+		printf("fucked 2.1 \n");
+		time_spinFor(msecs(2000));
+		PWM_Output(-200);
+		printf("fucked 0.9 \n");
+		time_spinFor(msecs(2000));
+	}
+}
 
  // **************************************************
