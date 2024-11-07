@@ -27,15 +27,15 @@ CanMsg toCanMsg(JoystickPosition pos){
 	CanMsg message = {
 		.id = ID_Joystick,
 		.length = 2,
-		.byte = {pos.x, pos.y}
+		.byte = {(uint8_t)pos.x,(uint8_t)pos.y}
 	};
 	return message;
 }
 
 JoystickPosition toJoyPos(CanMsg msg){
 	JoystickPosition pos = {
-		.x = msg.byte[0],
-		.y = msg.byte[1]
+		.x = (int8_t)msg.byte[0],
+		.y = (int8_t)msg.byte[1]
 	};
 	return pos;
 }
