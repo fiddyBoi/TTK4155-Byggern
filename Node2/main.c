@@ -10,6 +10,8 @@
 #include "can.h"
 #include "messages.h"
 #include "pwm.h"
+#include "adc.h"
+#include "score.h"
 // Test functions - prototypes
 // **************************************************
 //IO test for Node 2
@@ -30,6 +32,12 @@ void PWM_test();
 // PWM test with Joystick
 void PWM_testWithJoystick();
 
+// Reads the the ADC module output of the IR data
+void ADC_testRead();
+
+// Tests the score
+void SCORE_test();
+
 // **************************************************
 
 int main(void)
@@ -47,10 +55,12 @@ int main(void)
 	//Phase2 = 7
 	can_init((CanInit){.brp = 20, .phase1 = 6-1, .phase2 = 7-1, .propag = 2-1, .sjw = 4}, 0); 
 	PWM_Init();
+	ADC_Init();
+	SCORE_Init();
 	
 	// test shit
 	printf("Start program:\n");
-	PWM_testWithJoystick();
+	SCORE_test();
 	while(1){};
 }
 
@@ -138,7 +148,7 @@ void PWM_test(){
 void PWM_testWithJoystick(){
 		CanMsg r_message;
 		while(1){
-			time_spinFor(msecs(200));
+			//time_spinFor(msecs(200));
 			if(CAN_Rx(&r_message)){
 				can_printmsg(r_message);
 				JoystickPosition pos = toJoyPos(r_message);
@@ -148,5 +158,20 @@ void PWM_testWithJoystick(){
 				printf("No message \n");
 			}
 		}
+}
+
+void ADC_testRead(){
+	while(1){
+		uint16_t IRdata = ADC_Read();
+		printf("IR data: %d\n",IRdata);
+		time_spinFor(msecs(200));
+	}
+}
+
+void SCORE_test(){
+	while(1){
+		SCORE_Poll();
+		printf("SCORE: %d\n", SCORE_GetScore());
+	}
 }
  // **************************************************
