@@ -1,7 +1,8 @@
-#ifndef motor_H
-#define motor_H
+#ifndef encoder_H
+#define encoder_H
 // Includes
 // ****************************************************
+#include <stdio.h>
 // ****************************************************
 
 // Constants
@@ -20,7 +21,9 @@
 // Function prototypes
 // ****************************************************
 
-void MOTOR_Init();
+void ENCODER_Init();
+
+uint32_t ENCODER_Read(); // might want to scale this later in a scale function
 
 // ****************************************************
 #endif

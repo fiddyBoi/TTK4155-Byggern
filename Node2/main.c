@@ -12,6 +12,7 @@
 #include "pwm.h"
 #include "adc.h"
 #include "score.h"
+#include "encoder.h"
 // Test functions - prototypes
 // **************************************************
 //IO test for Node 2
@@ -38,6 +39,9 @@ void ADC_testRead();
 // Tests the score
 void SCORE_test();
 
+// Test encoder
+void ENCODER_test();
+
 // **************************************************
 
 int main(void)
@@ -57,10 +61,11 @@ int main(void)
 	PWM_Init();
 	ADC_Init();
 	SCORE_Init();
+	ENCODER_Init();
 	
 	// test shit
 	printf("Start program:\n");
-	PWM_testWithJoystick();
+	ENCODER_test();
 	while(1){};
 }
 
@@ -172,6 +177,13 @@ void SCORE_test(){
 	while(1){
 		SCORE_Poll();
 		printf("SCORE: %d\n", SCORE_GetScore());
+	}
+}
+
+void ENCODER_test(){
+	while(1){
+		time_spinFor(msecs(200));
+		printf("ENCODER: %d\n",ENCODER_Read());
 	}
 }
  // **************************************************
