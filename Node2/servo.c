@@ -28,14 +28,14 @@ void SERVO_Init(){
 	// We will use PWMH1, peripheral B, PB13
 	
 	// Enable pwm I/O
-	PIOB->PIO_ABSR = PIO_PB13B_PWMH1;
-	PIOB->PIO_PDR = PIO_PB13B_PWMH1;
+	PIOB->PIO_ABSR |= PIO_PB13B_PWMH1;
+	PIOB->PIO_PDR |= PIO_PB13B_PWMH1;
 	
 	// Enable clock for pwm
 	PMC->PMC_PCER1 |= 1 << (ID_PWM - 32);
 	
 	// PWM Clock / mode
-	PWM->PWM_CLK = PWM_CLK_PREA(0) | PWM_CLK_DIVA(84); // divide by 84 so we get 1Mhz (FCPU is 8.4Mhz)
+	PWM->PWM_CLK |= PWM_CLK_PREA(0) | PWM_CLK_DIVA(84); // divide by 84 so we get 1Mhz (FCPU is 8.4Mhz)
 	PWM->PWM_CH_NUM[1].PWM_CMR = PWM_CMR_CPRE_CLKA | PWM_CMR_CPOL; // clock A, active high, left-align
 	
 	// PWM Period

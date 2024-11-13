@@ -13,6 +13,7 @@
 #include "adc.h"
 #include "score.h"
 #include "encoder.h"
+#include "motor.h"
 // Test functions - prototypes
 // **************************************************
 //IO test for Node 2
@@ -42,6 +43,9 @@ void SCORE_test();
 // Test encoder
 void ENCODER_test();
 
+// Test motor with joystick
+void MOTOR_testWithJoystick();
+
 // **************************************************
 
 int main(void)
@@ -62,10 +66,11 @@ int main(void)
 	ADC_Init();
 	SCORE_Init();
 	ENCODER_Init();
+	MOTOR_Init();
 	
 	// test shit
 	printf("Start program:\n");
-	SERVO_testWithJoystick();
+	MOTOR_testWithJoystick();
 	while(1){};
 }
 
@@ -184,6 +189,22 @@ void ENCODER_test(){
 	while(1){
 		time_spinFor(msecs(200));
 		printf("ENCODER: %d\n",ENCODER_Read());
+	}
+}
+
+void MOTOR_testWithJoystick(){
+	CanMsg r_message;
+	while(1){
+		//time_spinFor(msecs(200));
+		if(CAN_Rx(&r_message)){
+			can_printmsg(r_message);
+			JoystickPosition pos = toJoyPos(r_message);
+			printf("Joystick position x:%d y:%d \n", pos.x, pos.y);
+			MOTOR_Output(pos.x);
+			SERVO_Output(pos.y);
+			}else{
+			//printf("No message \n");
+		}
 	}
 }
  // **************************************************

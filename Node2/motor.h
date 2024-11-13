@@ -23,5 +23,9 @@
 
 void MOTOR_Init();
 
+// takes input in the range -100 to 100 where 100 is max speed
+// the sign decides the direction
+void MOTOR_Output(int input);
+
 // ****************************************************
 #endif
