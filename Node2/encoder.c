@@ -42,7 +42,8 @@ void ENCODER_Init(){
 	PIOC->PIO_ABSR |= PIO_ABSR_P25 | PIO_ABSR_P26;
 	PIOC->PIO_PDR |= PIO_PDR_P25 | PIO_PDR_P26; 
 	
-	TC2->TC_CHANNEL[0].TC_CCR = TC_CCR_CLKDIS; // disable/enable clock for channel 0 during setup?
+	// disable/enable clock for channel 0 during setup
+	TC2->TC_CHANNEL[0].TC_CCR = TC_CCR_CLKDIS; 
 	
 	// Set block mode register for TC2
 	TC2->TC_BMR = TC_BMR_QDEN | TC_BMR_POSEN | TC_BMR_EDGPHA;
@@ -50,7 +51,9 @@ void ENCODER_Init(){
 	// Set XC0 as the selected clock channel for channel 0
 	TC2->TC_CHANNEL[0].TC_CMR = TC_CMR_TCCLKS_XC0; 
 	
-	TC2->TC_CHANNEL[0].TC_CCR |=  TC_CCR_CLKEN | TC_CCR_SWTRG; // disable/enable clock for channel 0 during setup?
+	// disable/enable clock for channel 0 during setup
+	// SWTRG resets the counter and starts the clock
+	TC2->TC_CHANNEL[0].TC_CCR |=  TC_CCR_CLKEN | TC_CCR_SWTRG; 
 }
 
 uint32_t ENCODER_Read(){

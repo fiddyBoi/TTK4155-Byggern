@@ -9,7 +9,7 @@
 #include "uart.h"
 #include "can.h"
 #include "messages.h"
-#include "pwm.h"
+#include "servo.h"
 #include "adc.h"
 #include "score.h"
 #include "encoder.h"
@@ -27,11 +27,11 @@ void CAN_transmitTest();
 // Tries to receive joystick data
 void MSG_Joystick();
 
-// test PWM 
-void PWM_test();
+// test SERVO/PWM 
+void SERVO_test();
 
-// PWM test with Joystick
-void PWM_testWithJoystick();
+// SERVO/PWM test with Joystick
+void SERVO_testWithJoystick();
 
 // Reads the the ADC module output of the IR data
 void ADC_testRead();
@@ -58,14 +58,14 @@ int main(void)
 	//Phase1 = 6
 	//Phase2 = 7
 	can_init((CanInit){.brp = 20, .phase1 = 6-1, .phase2 = 7-1, .propag = 2-1, .sjw = 4}, 0); 
-	PWM_Init();
+	SERVO_Init();
 	ADC_Init();
 	SCORE_Init();
 	ENCODER_Init();
 	
 	// test shit
 	printf("Start program:\n");
-	ENCODER_test();
+	SERVO_testWithJoystick();
 	while(1){};
 }
 
@@ -128,29 +128,29 @@ void MSG_Joystick(){
 	}
 }
 
-void PWM_test(){
+void SERVO_test(){
 	while(1){
 		//normal 
-		PWM_Output(-100);
+		SERVO_Output(-100);
 		printf("0.9 \n");
 		time_spinFor(msecs(2000));
-		PWM_Output(100);
+		SERVO_Output(100);
 		printf("2.1 \n");
 		time_spinFor(msecs(2000));
-		PWM_Output(0);
+		SERVO_Output(0);
 		printf("something \n");
 		time_spinFor(msecs(2000));
 		// fucked
-		PWM_Output(200);
+		SERVO_Output(200);
 		printf("fucked 2.1 \n");
 		time_spinFor(msecs(2000));
-		PWM_Output(-200);
+		SERVO_Output(-200);
 		printf("fucked 0.9 \n");
 		time_spinFor(msecs(2000));
 	}
 }
 
-void PWM_testWithJoystick(){
+void SERVO_testWithJoystick(){
 		CanMsg r_message;
 		while(1){
 			//time_spinFor(msecs(200));
@@ -158,7 +158,7 @@ void PWM_testWithJoystick(){
 				can_printmsg(r_message);
 				JoystickPosition pos = toJoyPos(r_message);
 				printf("Joystick position x:%d y:%d \n", pos.x, pos.y);
-				PWM_Output(pos.x);
+				SERVO_Output(pos.x);
 				}else{
 				printf("No message \n");
 			}
