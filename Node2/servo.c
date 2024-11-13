@@ -1,4 +1,4 @@
-#include "pwm.h"
+#include "servo.h"
 
 // Includes
 // ****************************************************
@@ -24,7 +24,7 @@
 // Implementation of the public functions
 // ****************************************************
 
-void PWM_Init(){
+void SERVO_Init(){
 	// We will use PWMH1, peripheral B, PB13
 	
 	// Enable pwm I/O
@@ -48,7 +48,7 @@ void PWM_Init(){
 	PWM->PWM_ENA = PWM_ENA_CHID1;
 }
 
-void PWM_Output(int input){
+void SERVO_Output(int input){
 	// force input into -100 to 100 range
 	if(input < -100){
 		input = -100;
