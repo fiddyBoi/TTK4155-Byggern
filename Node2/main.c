@@ -14,6 +14,7 @@
 #include "score.h"
 #include "encoder.h"
 #include "motor.h"
+#include "controller.h"
 // Test functions - prototypes
 // **************************************************
 //IO test for Node 2
@@ -46,6 +47,9 @@ void ENCODER_test();
 // Test motor with joystick
 void MOTOR_testWithJoystick();
 
+// Test Controller
+void CONTROLLER_test();
+
 // **************************************************
 
 int main(void)
@@ -67,10 +71,11 @@ int main(void)
 	SCORE_Init();
 	ENCODER_Init();
 	MOTOR_Init();
+	CONTROLLER_Init(1,1);
 	
 	// test shit
 	printf("Start program:\n");
-	ENCODER_test();
+	CONTROLLER_test();
 	while(1){};
 }
 
@@ -204,6 +209,21 @@ void MOTOR_testWithJoystick(){
 			JoystickPosition pos = toJoyPos(r_message);
 			printf("Joystick position x:%d y:%d \n", pos.x, pos.y);
 			MOTOR_Output(pos.x);
+			SERVO_Output(pos.y);
+			}else{
+			//printf("No message \n");
+		}
+	}
+}
+
+void CONTROLLER_test(){
+	CanMsg r_message;
+	while(1){
+		if(CAN_Rx(&r_message)){
+			//can_printmsg(r_message);
+			JoystickPosition pos = toJoyPos(r_message);
+			printf("Joystick position x:%d y:%d \n", pos.x, pos.y);
+			CONTROLLER_SetReference(pos.x);
 			SERVO_Output(pos.y);
 			}else{
 			//printf("No message \n");

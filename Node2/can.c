@@ -110,8 +110,8 @@ int CAN_Rx(CanMsg* m){
     
 
     
-/*
-// Example CAN interrupt handler
+
+/*// Example CAN interrupt handler
 void CAN0_Handler(void){
     char can_sr = CAN0->CAN_SR; 
     
