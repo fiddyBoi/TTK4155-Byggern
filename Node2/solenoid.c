@@ -33,6 +33,7 @@ void SOLENOID_Init(){
 	// Enable control of PA16 and set as output
 	PIOA->PIO_PER = PIO_PER_P16;
 	PIOA->PIO_OER = PIO_OER_P16;
+	PIOA->PIO_SODR = PIO_SODR_P16;
 }
 
 void SOLENOID_Hit(){
