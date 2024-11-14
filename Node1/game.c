@@ -36,12 +36,6 @@ void GAME_Start(){
 		};
 		CanMsg msg = toCanMsg(m);
 		CAN_Tx(msg);
-		
-		// See if we should quit
-		SliderPositions sPos = SLIDE_GetPositions();
-		if(sPos.left == 100){
-			return;
-		}
 	}
 }
 

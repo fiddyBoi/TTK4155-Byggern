@@ -22,9 +22,6 @@
 
 // Starts playing of the game by sending CAN messages 
 // to Node 2.
-// Quit by sliding left slider to 100 (lol).
-// REMEMBER TO SLIDE BACK DOWN IF YOU WANT TO START AGAIN
-// THIS UI IS VERY VERY GOOD!
 void GAME_Start();
 
 // ****************************************************
