@@ -5,6 +5,7 @@
 #include <string.h>
 #include "oled.h"
 #include "multifunctionBoard.h"
+#include "game.h"
 // ****************************************************
 
 // Private macros and constants
@@ -142,6 +143,9 @@ void MENU_PollAndUpdate(){
 		case HOME_MENU:
 			if(homeOptions[selectedOption] == "Start"){
 				printf("Start was selected!\n");
+				OLED_Reset();
+				GAME_Start();
+				render();
 			}
 			else if(homeOptions[selectedOption] == "Calibrate"){
 				printf("Calibrate was selected\n");

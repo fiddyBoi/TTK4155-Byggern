@@ -25,6 +25,7 @@
 #include "mcp2515_regs.h"
 #include "can.h"
 #include "messages.h"
+#include "game.h"
 
 // Test functions - prototypes
 // **************************************************
@@ -83,6 +84,9 @@ void MSG_Joystick();
 // Sends applications messages
 void MSG_test();
 
+// STARTS THE GAME!!!!
+void GAMELOOP();
+
 // **************************************************
 
 int main(void)
@@ -98,8 +102,7 @@ int main(void)
 	CAN_Init();
 	
 	// test shit
-	MSG_test();
-	
+	GAMELOOP();
 }
 
  // Test functions - implementation
@@ -324,6 +327,16 @@ void MSG_test(){
 		CanMsg msg = toCanMsg(m);
 		CAN_Tx(msg);
 		printf("Message sent\n");
+	}
+}
+
+void GAMELOOP(){
+	JOY_Calibrate();
+	OLED_Reset();
+	Menu_Start();
+	while(1){
+		MENU_PollAndUpdate();
+		_delay_ms(100);
 	}
 }
 
