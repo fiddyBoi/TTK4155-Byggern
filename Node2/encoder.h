@@ -21,9 +21,14 @@
 // Function prototypes
 // ****************************************************
 
+// We assume the motor starts in the middle position!
 void ENCODER_Init();
 
-uint32_t ENCODER_Read(); // might want to scale this later in a scale function
+uint32_t ENCODER_Read();
+
+// Converts the encoder measurement to an -100 to 100 
+// Interval
+int ENCODER_Scale(uint32_t encoder_value);
 
 // ****************************************************
 #endif

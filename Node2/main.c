@@ -70,7 +70,7 @@ int main(void)
 	
 	// test shit
 	printf("Start program:\n");
-	MOTOR_testWithJoystick();
+	ENCODER_test();
 	while(1){};
 }
 
@@ -188,7 +188,10 @@ void SCORE_test(){
 void ENCODER_test(){
 	while(1){
 		time_spinFor(msecs(200));
-		printf("ENCODER: %d\n",ENCODER_Read());
+		uint32_t data = ENCODER_Read();
+		int data_scaled = ENCODER_Scale(data);
+		printf("ENCODER: %d\n",data);
+		printf("ENCODER SCALED: %d\n", data_scaled);
 	}
 }
 
@@ -197,7 +200,7 @@ void MOTOR_testWithJoystick(){
 	while(1){
 		//time_spinFor(msecs(200));
 		if(CAN_Rx(&r_message)){
-			can_printmsg(r_message);
+			//can_printmsg(r_message);
 			JoystickPosition pos = toJoyPos(r_message);
 			printf("Joystick position x:%d y:%d \n", pos.x, pos.y);
 			MOTOR_Output(pos.x);

@@ -297,7 +297,7 @@ void CAN_testNormalModeRx(){
 void MSG_Joystick(){
 	JOY_Calibrate();
 	while(1){
-		_delay_ms(100);
+		//_delay_ms(100);
 		JoystickPosition pos = JOY_GetPosition();
 		printf("Joystick position x:%d y:%d \n", pos.x, pos.y);
 		CanMsg msg = toCanMsg(pos);

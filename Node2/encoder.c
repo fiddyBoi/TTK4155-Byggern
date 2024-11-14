@@ -7,6 +7,8 @@
 
 // Private macros and constants
 // ****************************************************
+#define ENCODER_MAX (int32_t)5610
+#define ENCODER_HALF (int32_t)ENCODER_MAX/2
 // ****************************************************
 
 // Private types
@@ -58,6 +60,12 @@ void ENCODER_Init(){
 
 uint32_t ENCODER_Read(){
 	return TC2->TC_CHANNEL[0].TC_CV;
+}
+
+int ENCODER_Scale(uint32_t encoder_value){
+	// -ENCODER_MAX/2 -> -100,  ENCODER_MAX/2 -> 100
+	int32_t data = (int32_t) encoder_value;
+	return 100*data/(ENCODER_HALF);
 }
 
 // ****************************************************

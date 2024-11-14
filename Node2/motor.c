@@ -72,10 +72,10 @@ void MOTOR_Output(int input){
 	}
 	// Decide and set direction 
 	if(input < 0){
-		PIOC->PIO_CODR = PIO_SODR_P23;
+		PIOC->PIO_SODR = PIO_SODR_P23;
 	}
 	if(input >= 0){
-		PIOC->PIO_SODR = PIO_SODR_P23;
+		PIOC->PIO_CODR = PIO_SODR_P23;
 	}
 	
 	// convert to 0-20ms
