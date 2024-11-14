@@ -4,16 +4,20 @@
 // Includes
 // ****************************************************
 #include "can.h"
-#include "multifunctionBoard.h"
 // ****************************************************
 
 // Constants
 // ****************************************************
-#define ID_Joystick 1
+#define ID_APPMESSAGE 1
 // ****************************************************
 
 // Types
 // ****************************************************
+typedef struct ApplicationMsg{
+	int x; // -100 to 100 joystick
+	int y; // -100 to 100 joystick
+	int button;
+} ApplicationMsg;
 // ****************************************************
 
 // Global variables
@@ -22,7 +26,7 @@
 
 // Function prototypes
 // ****************************************************
-CanMsg toCanMsg(JoystickPosition pos);
-JoystickPosition toJoyPos(CanMsg msg);
+CanMsg toCanMsg(ApplicationMsg msg);
+ApplicationMsg toAppMsg(CanMsg msg);
 // ****************************************************
 #endif

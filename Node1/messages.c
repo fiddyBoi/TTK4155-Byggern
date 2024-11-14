@@ -23,21 +23,22 @@
 // Implementation of the public functions
 // ****************************************************
 
-CanMsg toCanMsg(JoystickPosition pos){
+CanMsg toCanMsg(ApplicationMsg msg){
 	CanMsg message = {
-		.id = ID_Joystick,
-		.length = 2,
-		.byte = {(uint8_t)pos.x,(uint8_t)pos.y}
+		.id = ID_APPMESSAGE,
+		.length = 3,
+		.byte = {(uint8_t)msg.x,(uint8_t)msg.y,(uint8_t)msg.button}
 	};
 	return message;
 }
 
-JoystickPosition toJoyPos(CanMsg msg){
-	JoystickPosition pos = {
+ApplicationMsg toAppMsg(CanMsg msg){
+	ApplicationMsg m = {
 		.x = (int8_t)msg.byte[0],
-		.y = (int8_t)msg.byte[1]
+		.y = (int8_t)msg.byte[1],
+		.button = (int8_t)msg.byte[2]
 	};
-	return pos;
+	return m;
 }
 
 // ****************************************************

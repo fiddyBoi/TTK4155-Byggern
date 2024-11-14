@@ -80,6 +80,9 @@ void CAN_testNormalModeRx();
 // Sends joystick data periodically to node 2
 void MSG_Joystick();
 
+// Sends applications messages
+void MSG_test();
+
 // **************************************************
 
 int main(void)
@@ -95,7 +98,7 @@ int main(void)
 	CAN_Init();
 	
 	// test shit
-	MSG_Joystick();
+	MSG_test();
 	
 }
 
@@ -294,13 +297,31 @@ void CAN_testNormalModeRx(){
 	}
 }
 
-void MSG_Joystick(){
+/*void MSG_Joystick(){
 	JOY_Calibrate();
 	while(1){
 		//_delay_ms(100);
 		JoystickPosition pos = JOY_GetPosition();
 		printf("Joystick position x:%d y:%d \n", pos.x, pos.y);
 		CanMsg msg = toCanMsg(pos);
+		CAN_Tx(msg);
+		printf("Message sent\n");
+	}
+}*/
+
+void MSG_test(){
+	JOY_Calibrate();
+	while(1){
+		//_delay_ms(100);
+		JoystickPosition pos = JOY_GetPosition();
+		int b = JOY_GetButton();
+		ApplicationMsg m = {
+			.x = pos.x,
+			.y = pos.y,
+			.button = b
+		};
+		printf("ApplicationMsg position x:%d y:%d b:%d\n", m.x, m.y, m.button);
+		CanMsg msg = toCanMsg(m);
 		CAN_Tx(msg);
 		printf("Message sent\n");
 	}

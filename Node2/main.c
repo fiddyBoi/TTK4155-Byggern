@@ -54,6 +54,9 @@ void CONTROLLER_test();
 // Solenoid test
 void SOLENOID_test();
 
+// Controller and solenoid
+void CONTROLLER_testBoth();
+
 // **************************************************
 
 int main(void)
@@ -75,12 +78,12 @@ int main(void)
 	SCORE_Init();
 	ENCODER_Init();
 	MOTOR_Init();
-	//CONTROLLER_Init(1,1);
+	CONTROLLER_Init(1,1);
 	SOLENOID_Init();
 	
 	// test shit
 	printf("Start program:\n");
-	SOLENOID_test();
+	CONTROLLER_testBoth();
 	while(1){};
 }
 
@@ -129,7 +132,7 @@ void CAN_transmitTest(){
 }
 
 
-void MSG_Joystick(){
+/*void MSG_Joystick(){
 	CanMsg r_message;
 	while(1){
 		time_spinFor(msecs(200));
@@ -141,7 +144,7 @@ void MSG_Joystick(){
 			printf("No message \n");
 		}
 	}
-}
+}*/
 
 void SERVO_test(){
 	while(1){
@@ -165,6 +168,7 @@ void SERVO_test(){
 	}
 }
 
+/*
 void SERVO_testWithJoystick(){
 		CanMsg r_message;
 		while(1){
@@ -178,7 +182,7 @@ void SERVO_testWithJoystick(){
 				printf("No message \n");
 			}
 		}
-}
+}*/
 
 void ADC_testRead(){
 	while(1){
@@ -205,6 +209,7 @@ void ENCODER_test(){
 	}
 }
 
+/*
 void MOTOR_testWithJoystick(){
 	CanMsg r_message;
 	while(1){
@@ -219,8 +224,9 @@ void MOTOR_testWithJoystick(){
 			//printf("No message \n");
 		}
 	}
-}
+}*/
 
+/*
 void CONTROLLER_test(){
 	CanMsg r_message;
 	while(1){
@@ -234,12 +240,30 @@ void CONTROLLER_test(){
 			//printf("No message \n");
 		}
 	}
-}
+}*/
 
 void SOLENOID_test(){
 	while(1){
 		time_spinFor(msecs(1000));
 		SOLENOID_Hit();
+	}
+}
+
+void CONTROLLER_testBoth(){
+	CanMsg r_message;
+	while(1){
+		if(CAN_Rx(&r_message)){
+			//can_printmsg(r_message);
+			ApplicationMsg m = toAppMsg(r_message);
+			printf("ApplicationMsg position x:%d y:%d b:%d\n", m.x, m.y, m.button);
+			CONTROLLER_SetReference(m.x);
+			SERVO_Output(m.y);
+			if(m.button){
+				SOLENOID_Hit();
+			}
+			}else{
+			//printf("No message \n");
+		}
 	}
 }
  // **************************************************
