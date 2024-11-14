@@ -42,7 +42,7 @@ void SERVO_Init(){
 	PWM->PWM_CH_NUM[1].PWM_CPRD = PWM_CPRD_CPRD(20000); // 20ms
 	
 	// Set to a legal duty cycle
-	PWM->PWM_CH_NUM[1].PWM_CDTY = PWM_CDTY_CDTY(900); // 0.9ms
+	PWM->PWM_CH_NUM[1].PWM_CDTY = PWM_CDTY_CDTY(1500); // 1.5ms
 	
 	// Enable PWM channel 1
 	PWM->PWM_ENA = PWM_ENA_CHID1;
