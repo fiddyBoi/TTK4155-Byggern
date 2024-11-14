@@ -15,6 +15,7 @@
 #include "encoder.h"
 #include "motor.h"
 #include "controller.h"
+#include "solenoid.h"
 // Test functions - prototypes
 // **************************************************
 //IO test for Node 2
@@ -50,6 +51,9 @@ void MOTOR_testWithJoystick();
 // Test Controller
 void CONTROLLER_test();
 
+// Solenoid test
+void SOLENOID_test();
+
 // **************************************************
 
 int main(void)
@@ -71,11 +75,12 @@ int main(void)
 	SCORE_Init();
 	ENCODER_Init();
 	MOTOR_Init();
-	CONTROLLER_Init(1,1);
+	//CONTROLLER_Init(1,1);
+	SOLENOID_Init();
 	
 	// test shit
 	printf("Start program:\n");
-	CONTROLLER_test();
+	SOLENOID_test();
 	while(1){};
 }
 
@@ -228,6 +233,13 @@ void CONTROLLER_test(){
 			}else{
 			//printf("No message \n");
 		}
+	}
+}
+
+void SOLENOID_test(){
+	while(1){
+		time_spinFor(msecs(1000));
+		SOLENOID_Hit();
 	}
 }
  // **************************************************
