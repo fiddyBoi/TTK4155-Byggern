@@ -36,6 +36,7 @@ void GAME_Start(){
 		};
 		CanMsg msg = toCanMsg(m);
 		CAN_Tx(msg);
+		printf("ApplicationMsg x:%d y:%d b:%d\n", m.x, m.y, m.button);
 	}
 }
 

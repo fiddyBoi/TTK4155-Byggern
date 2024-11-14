@@ -48,6 +48,11 @@ JoystickPosition JOY_GetPosition(){
 	uint8_t y = ADC_Read(JOYSTICK_Y_CHANNEL);
 	pos.x = (int) (x - zeroPos)*100/128;
 	pos.y = (int) (y - zeroPos)*100/128;
+	// Enforce -100 to 100 limit
+	if(pos.x > 100){pos.x = 100;}
+	if(pos.x < -100){pos.x = -100;}
+	if(pos.y > 100){pos.y = 100;}
+	if(pos.y < -100){pos.y = -100;}
 	return pos; 
 }
 
